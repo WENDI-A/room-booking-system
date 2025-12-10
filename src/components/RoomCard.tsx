@@ -11,6 +11,22 @@ interface RoomCardProps {
     room: IRoom;
 }
 
+const getRoomTypeDescription = (type: string): string => {
+    const descriptions: { [key: string]: string } = {
+        single: 'Basic, comfortable room, usually with a queen or king bed.',
+        double: 'Slightly larger than standard, may include better views or upgraded amenities.',
+        deluxe: 'More spacious, better view, high-end furnishings.',
+        suite: 'Large suite with living room, work desk, premium amenities.',
+        honeymoon: 'Designed for couples; may include Jacuzzi, romantic décor.',
+        family: 'Multiple bedrooms or larger living space for families.',
+        accessible: 'Designed for guests with disabilities.',
+        villa: 'Separate luxury unit, sometimes private pool.',
+        presidential: 'Most exclusive, with personal butler service, premium furnishings, panoramic views.',
+        penthouse: 'Often the top floor, ultra-luxury amenities, private terrace, luxury bath.'
+    };
+    return descriptions[type] || '';
+};
+
 export default function RoomCard({ room }: RoomCardProps) {
     return (
         <motion.div
@@ -98,6 +114,8 @@ export default function RoomCard({ room }: RoomCardProps) {
                 <p className="text-gray-600 mb-4 line-clamp-2 leading-relaxed">
                     {room.description}
                 </p>
+
+
 
                 {/* Capacity */}
                 <div className="flex items-center space-x-2 text-gray-700 mb-4">

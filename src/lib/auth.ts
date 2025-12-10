@@ -34,9 +34,7 @@ export const authOptions: NextAuthOptions = {
                     throw new Error('Invalid email or password');
                 }
 
-                if (user.role !== 'admin') {
-                    throw new Error('Access denied. Admin only.');
-                }
+
 
                 return {
                     id: user._id.toString(),
@@ -64,7 +62,7 @@ export const authOptions: NextAuthOptions = {
         },
     },
     pages: {
-        signIn: '/admin/login',
+        signIn: '/auth/login',
     },
     session: {
         strategy: 'jwt',

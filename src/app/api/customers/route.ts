@@ -35,7 +35,22 @@ export async function POST(request: NextRequest) {
         await connectDB();
 
         const body = await request.json();
-        const customer = await Customer.create(body);
+        
+        // Check if customer already exists
+        let customer = await Customer.findOne({ email: body.email });
+        
+        if (!customer) {
+           const newCustomer = new Customer(body);
+customer = await newCustomer.save();
+
+        } else {
+            // Update existing customer info
+            customer = await Customer.findByIdAndUpdate(
+                customer._id,
+                { name: body.name, phone: body.phone },
+                { new: true }
+            );
+        }
 
         return NextResponse.json({ success: true, data: customer }, { status: 201 });
     } catch (error: any) {

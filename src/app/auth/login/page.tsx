@@ -33,8 +33,7 @@ export default function AdminAuthPage() {
                 toast.error(result.error);
             } else {
                 toast.success('Sign in successful!');
-                // Role-based redirect will be handled by middleware
-                window.location.href = '/';
+                router.push('/');
             }
         } catch (error) {
             toast.error('An error occurred during sign in');
@@ -81,15 +80,15 @@ export default function AdminAuthPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center py-4 sm:py-12 px-2 sm:px-4 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 text-gray-900">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="max-w-md w-full bg-white rounded-lg shadow-2xl p-4 sm:p-8 mx-2"
+                className="max-w-md w-full bg-white rounded-lg shadow-2xl p-8"
             >
                 <div className="text-center mb-8">
-                    <FaHotel className="text-4xl sm:text-6xl text-blue-600 mx-auto mb-4" />
-                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                    <FaHotel className="text-6xl text-blue-600 mx-auto mb-4" />
+                    <h2 className="text-3xl font-bold text-gray-900">
                         {isSignUp ? 'Create Account' : 'Sign In'}
                     </h2>
                     <p className="text-gray-600 mt-2">
@@ -99,7 +98,7 @@ export default function AdminAuthPage() {
 
 
 
-                <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-4 sm:space-y-6">
+                <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-6">
                     {isSignUp && (
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -112,7 +111,7 @@ export default function AdminAuthPage() {
                                 onChange={(e) =>
                                     setCredentials({ ...credentials, name: e.target.value })
                                 }
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="John Doe"
                             />
                         </div>
@@ -129,7 +128,7 @@ export default function AdminAuthPage() {
                             onChange={(e) =>
                                 setCredentials({ ...credentials, email: e.target.value })
                             }
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder={isSignUp ? 'your@email.com' : 'admin@hotel.com'}
                         />
                     </div>
@@ -145,7 +144,7 @@ export default function AdminAuthPage() {
                             onChange={(e) =>
                                 setCredentials({ ...credentials, password: e.target.value })
                             }
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             placeholder="••••••••"
                         />
                     </div>
@@ -162,7 +161,7 @@ export default function AdminAuthPage() {
                                 onChange={(e) =>
                                     setCredentials({ ...credentials, confirmPassword: e.target.value })
                                 }
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="••••••••"
                             />
                         </div>
@@ -193,6 +192,8 @@ export default function AdminAuthPage() {
                         {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
                     </button>
                 </div>
+
+
             </motion.div>
         </div>
     );

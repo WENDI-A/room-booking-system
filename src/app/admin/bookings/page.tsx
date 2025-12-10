@@ -83,7 +83,7 @@ export default function AdminBookingsPage() {
                         <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
                     </div>
                 ) : bookings.length > 0 ? (
-                    <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div className="bg-white rounded-lg shadow-lg overflow-hidden ">
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
@@ -155,7 +155,7 @@ export default function AdminBookingsPage() {
                                                 <select
                                                     value={booking.status}
                                                     onChange={(e) => updateStatus(booking._id!, e.target.value)}
-                                                    className="px-3 py-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                    className="px-3 py-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 bg-white"
                                                 >
                                                     <option value="pending">Pending</option>
                                                     <option value="confirmed">Confirmed</option>

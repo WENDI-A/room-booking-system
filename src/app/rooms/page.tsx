@@ -72,6 +72,8 @@ export default function RoomsPage() {
         });
     };
 
+
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white pt-24 pb-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -81,7 +83,7 @@ export default function RoomsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-12"
                 >
-                    <h1 className="text-5xl md:text-6xl font-bold mb-4">
+                    <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent ">
                         Our{' '}
                         <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                             Rooms
@@ -117,7 +119,7 @@ export default function RoomsPage() {
                                     name="type"
                                     value={filters.type}
                                     onChange={handleFilterChange}
-                                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 outline-none bg-white"
+                                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 outline-none bg-white text-gray-900 "
                                 >
                                     <option value="">All Types</option>
                                     <option value="single">Single</option>
@@ -129,11 +131,11 @@ export default function RoomsPage() {
 
                             {/* Min Price */}
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-3">
+                                <label className="block text-sm font-semibold text-gray-900 mb-3 ">
                                     Min Price
                                 </label>
                                 <div className="relative">
-                                    <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">
+                                    <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-900 bg-white font-medium ">
                                         $
                                     </span>
                                     <input
@@ -142,7 +144,7 @@ export default function RoomsPage() {
                                         value={filters.minPrice}
                                         onChange={handleFilterChange}
                                         placeholder="0"
-                                        className="w-full pl-8 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 outline-none"
+                                        className="w-full pl-8 pr-4 py-3 border-2 border-gray-200  text-gray-900 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 outline-none"
                                     />
                                 </div>
                             </div>
@@ -162,7 +164,7 @@ export default function RoomsPage() {
                                         value={filters.maxPrice}
                                         onChange={handleFilterChange}
                                         placeholder="1000"
-                                        className="w-full pl-8 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 outline-none"
+                                        className="w-full pl-8 pr-4 py-3 border-2 border-gray-200 text-gray-900 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-300 outline-none"
                                     />
                                 </div>
                             </div>
@@ -192,7 +194,7 @@ export default function RoomsPage() {
                     </div>
                 </motion.div>
 
-                {/* Rooms Grid */}
+                {/* Room Categories */}
                 {loading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -206,55 +208,68 @@ export default function RoomsPage() {
                             </div>
                         ))}
                     </div>
-                ) : filteredRooms.length > 0 ? (
-                    <motion.div
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            hidden: { opacity: 0 },
-                            visible: {
-                                opacity: 1,
-                                transition: {
-                                    staggerChildren: 0.1,
-                                },
-                            },
-                        }}
-                    >
-                        {filteredRooms.map((room) => (
-                            <motion.div
-                                key={room._id}
-                                variants={{
-                                    hidden: { opacity: 0, y: 20 },
-                                    visible: { opacity: 1, y: 0 },
-                                }}
-                            >
-                                <RoomCard room={room} />
-                            </motion.div>
-                        ))}
-                    </motion.div>
                 ) : (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="text-center py-20"
-                    >
-                        <div className="inline-flex p-6 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full mb-6">
-                            <FaSearch className="text-5xl text-blue-600" />
+                    <div className="space-y-16">
+                        {/* Standard / Classic Rooms */}
+                        <div className="mb-8 sm:mb-16">
+                            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Standard / Classic Rooms</h2>
+                            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">Basic, comfortable room, usually with a queen or king bed.</p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredRooms.filter(room => ['single', 'double'].includes(room.type)).map((room) => (
+                                    <RoomCard key={room._id} room={room} />
+                                ))}
+                            </div>
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-3">No rooms found</h3>
-                        <p className="text-gray-600 mb-6">
-                            Try adjusting your filters to see more results
-                        </p>
-                        <motion.button
-                            onClick={resetFilters}
-                            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            Reset Filters
-                        </motion.button>
-                    </motion.div>
+
+                        {/* Deluxe Rooms */}
+                        <div className="mb-8 sm:mb-16">
+                            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Deluxe Rooms</h2>
+                            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">More spacious, better view, high-end furnishings.</p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredRooms.filter(room => room.type === 'deluxe').map((room) => (
+                                    <RoomCard key={room._id} room={room} />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Suites */}
+                        <div className="mb-8 sm:mb-16">
+                            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Suites</h2>
+                            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">Luxurious multi-room accommodations with separate living areas.</p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredRooms.filter(room => room.type === 'suite').map((room) => (
+                                    <RoomCard key={room._id} room={room} />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Specialty Rooms */}
+                        <div className="mb-8 sm:mb-16">
+                            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Specialty Rooms</h2>
+                            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">Unique accommodations designed for special occasions and specific needs.</p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredRooms.filter(room => ['honeymoon', 'family', 'accessible', 'themed'].includes(room.type)).map((room) => (
+                                    <RoomCard key={room._id} room={room} />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Unique / Ultra-Luxury Options */}
+                        <div className="mb-8 sm:mb-16">
+                            <h2 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-4">Unique / Ultra-Luxury Options</h2>
+                            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">The pinnacle of luxury with exclusive amenities and personalized service.</p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredRooms.filter(room => ['villa', 'presidential', 'penthouse', 'royal'].includes(room.type)).map((room) => (
+                                    <RoomCard key={room._id} room={room} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

@@ -1,20 +1,51 @@
+import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { getToken } from 'next-auth/jwt';
 
-export async function middleware(request: NextRequest) {
-    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+export default withAuth(
+    function middleware(req) {
+        const token = req.nextauth.token;
+        const { pathname } = req.nextUrl;
 
-    const isAdminRoute = request.nextUrl.pathname.startsWith('/admin') &&
-        !request.nextUrl.pathname.startsWith('/admin/login');
+        // Redirect based on user role after login
+        if (pathname === '/' && token) {
+            if (token.role === 'admin') {
+                return NextResponse.redirect(new URL('/admin/dashboard', req.url));
+            }
+        }
 
-    if (isAdminRoute && !token) {
-        return NextResponse.redirect(new URL('/admin/login', request.url));
+        // Protect admin routes
+        if (pathname.startsWith('/admin') && token?.role !== 'admin') {
+            return NextResponse.redirect(new URL('/auth/login', req.url));
+        }
+
+        return NextResponse.next();
+    },
+    {
+        callbacks: {
+            authorized: ({ token, req }) => {
+                const { pathname } = req.nextUrl;
+                
+                // Allow access to auth pages
+                if (pathname.startsWith('/auth') || pathname.startsWith('/api/auth')) {
+                    return true;
+                }
+                
+                // Allow access to public pages
+                if (pathname === '/' || pathname.startsWith('/rooms')) {
+                    return true;
+                }
+                
+                // Require authentication for admin pages
+                if (pathname.startsWith('/admin')) {
+                    return !!token && token.role === 'admin';
+                }
+                
+                return true;
+            },
+        },
     }
-
-    return NextResponse.next();
-}
+);
 
 export const config = {
-    matcher: ['/admin/:path*'],
+    matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };

@@ -5,6 +5,8 @@ import { useSession, signOut } from 'next-auth/react';
 import { FaHotel, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Avatar from './Avatar';
+
 
 export default function Navbar() {
     const { data: session } = useSession();
@@ -90,15 +92,12 @@ export default function Navbar() {
 
                         {session?.user ? (
                             <>
-                                <Link href="/admin/dashboard">
-                                    <motion.span
-                                        className={`font-medium transition-colors duration-300 relative group ${scrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-200'
-                                            }`}
+                                <Link href="/dashboard">
+                                    <motion.div
                                         whileHover={{ scale: 1.05 }}
                                     >
-                                        Dashboard
-                                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300" />
-                                    </motion.span>
+                                        <Avatar name={session.user.name || 'User'} size="md" />
+                                    </motion.div>
                                 </Link>
 
                                 <motion.button
@@ -122,7 +121,7 @@ export default function Navbar() {
                                     whileTap={{ scale: 0.95 }}
                                 >
                                     <FaUser />
-                                    <span>Admin Login</span>
+                                    <span>Sign in </span>
                                 </motion.button>
                             </Link>
                         )}
