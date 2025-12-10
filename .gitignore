@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Admin Credentials (for seeding)
+#ADMIN_EMAIL=admin@hotel.com
+#ADMIN_PASSWORD=admin123
